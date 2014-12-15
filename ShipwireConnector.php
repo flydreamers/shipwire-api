@@ -111,6 +111,8 @@ class ShipwireConnector //extends Shipwire
      * @param string $resource function to be called
      * @param array $params key value parameters
      * @param string $method
+     * @param string $body
+     *
      * @throws Exception
      */
     public function api($resource, $params = [], $method = "GET", $body = null)
@@ -122,10 +124,13 @@ class ShipwireConnector //extends Shipwire
                 'Accept' => 'application/json',
                 'Authorization' => 'Basic ' . self::$authorizationCode
             ],
-            'body' => $body
+            'body'=>$body
         ]);
         if (count($params) > 0) {
             $request->setQuery($params);
+        }
+        if ($body!==null){
+            $request->addHeader('content-type', 'application/json');
         }
         try {
             $response = $client->send($request);

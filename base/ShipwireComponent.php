@@ -17,7 +17,7 @@ class ShipwireComponent
     /**
      * @var ShipwireConnector
      */
-    private $_connector;
+    protected $_connector;
 
     /**
      * Sets internal settings
@@ -28,8 +28,8 @@ class ShipwireComponent
     }
 
     /**
-     * Gets stock of items
-     * @param array $params
+     * @param $route
+     * @param $params
      * @param int $page
      * @param int $limit
      * @throws \Exception
@@ -37,8 +37,23 @@ class ShipwireComponent
      * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
      * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
      */
-    public function getStock($params=[], $page=0, $limit=50)
-    {
-        return $this->_connector->api('stock',$params, ShipwireConnector::GET);
+    protected function get($route, $params, $page=0, $limit=50){
+        $params['offset'] = $page * $limit;
+        $params['limit'] = $limit;
+        return $this->_connector->api($route, $params, ShipwireConnector::GET);
+    }
+
+    /**
+     * @param $route
+     * @param $params
+     * @param int $page
+     * @param int $limit
+     * @throws \Exception
+     * @throws \flydreamers\shipwire\exceptions\InvalidAuthorizationException
+     * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
+     * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
+     */
+    protected function post($route, $params, $body){
+        return $this->_connector->api($route, $params, ShipwireConnector::POST, $body);
     }
 }
