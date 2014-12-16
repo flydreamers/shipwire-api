@@ -54,7 +54,7 @@ class ShipwireConnector //extends Shipwire
      * @param string $version
      * @throws Exception
      */
-    public static function setup($username, $password, $environment = null)
+    public static function init($username, $password, $environment = null)
     {
         self::$authorizationCode = base64_encode($username . ':' . $password);
         if (self::$environment !== null) {

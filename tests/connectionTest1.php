@@ -1,5 +1,5 @@
 <?php
-namespace flydreamers\shipwire\tests;
+require_once(dirname(__DIR__) . '/vendor/autoload.php');
 
 use flydreamers\shipwire\Address;
 use flydreamers\shipwire\Rate;
@@ -11,16 +11,15 @@ $config = [
     'password' => 'xxxxxxxxxxxxxx',
 ];
 if (file_exists(dirname(__DIR__).'/local-config.php')){
-    $config = require_once(dirname(__DIR__).'/local-config.php');
+    $config = array_merge($config, require_once(dirname(__DIR__).'/local-config.php'));
 }
-require_once(dirname(__DIR__) . '/vendor/autoload.php');
 
-ShipwireConnector::setup($config['username'], $config['password'], 'sandbox');
+ShipwireConnector::init($config['username'], $config['password'], 'sandbox');
+
 //$stock = new Stock();
-
-
 //$stockRet = $stock->getStockBySKUs(['CAPTRACKERBLUE']);
 //var_dump('Stock: ' . count($stockRet['items']));
+//return;
 
 $rate = new Rate;
 
@@ -31,19 +30,12 @@ $address = Address::createFromArray([
     "city" => "Snoqualmie",
     "postalCode" => "85283",
     "region" => "WA",
-    "country" => "MX",
+    "country" => "US",
     "isCommercial" => 0,
     "isPoBox" => 0
 ]);
 
-$address = Address::createFromArray([
-    'address1'=>'13650 NW 4th St',
-    'address2'=>'Suite 201',
-    'city'=>'Sunrise',
-    'postalCode'=>'1115',
-    'region'=>'FL',
-    "country" => "AR",
-]);
+
 $items = [['sku' => 'CAPTRACKERBLUE', 'quantity' => 3]];
 
 $shippingInfo = $rate->quote($address, [['sku' => 'CAPTRACKERBLUE', 'quantity' => 3]]);
