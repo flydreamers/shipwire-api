@@ -4,15 +4,15 @@ namespace flydreamers\shipwire;
 
 class Address
 {
-    public $address1;
-    public $address2;
-    public $address3;
-    public $city;
-    public $postalCode;
-    public $region;
-    public $country;
-    public $isCommercial;
-    public $isPoBox;
+    public $address1='';
+    public $address2='';
+    public $address3='';
+    public $city='';
+    public $postalCode='';
+    public $region='';
+    public $country='';
+    public $isCommercial=0;
+    public $isPoBox=0;
 
 
     /**

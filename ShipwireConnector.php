@@ -141,6 +141,7 @@ class ShipwireConnector //extends Shipwire
             return $data['resource'];
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             $response = $e->getResponse()->json();
+            var_dump($response); die();
             switch ($response['status']) {
                 case 401:
                     throw new \flydreamers\shipwire\exceptions\InvalidAuthorizationException($response['message'], $response['status']);
