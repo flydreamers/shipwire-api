@@ -2,6 +2,11 @@ shipwire-api
 ============
 These library will help you with the usage of Shipwire API.
 
+[![Latest Stable Version](https://poser.pugx.org/flydreamers/shipwire-api/v/stable.svg)](https://packagist.org/packages/flydreamers/shipwire-api)
+[![Total Downloads](https://poser.pugx.org/flydreamers/shipwire-api/downloads.svg)](https://packagist.org/packages/flydreamers/shipwire-api)
+[![Latest Unstable Version](https://poser.pugx.org/flydreamers/shipwire-api/v/unstable.svg)](https://packagist.org/packages/flydreamers/shipwire-api)
+[![License](https://poser.pugx.org/flydreamers/shipwire-api/license.svg)](https://packagist.org/packages/flydreamers/shipwire-api)
+
 ## Installing via Composer
 
 The recommended way to install Guzzle is through
