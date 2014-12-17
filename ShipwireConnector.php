@@ -115,7 +115,7 @@ class ShipwireConnector //extends Shipwire
      *
      * @throws Exception
      */
-    public function api($resource, $params = [], $method = "GET", $body = null)
+    public function api($resource, $params = [], $method = "GET", $body = null, $onlyResource = false)
     {
         $client = self::getClient();
         $request = $client->createRequest($method, '/api/v3/' . $resource, [
@@ -138,7 +138,7 @@ class ShipwireConnector //extends Shipwire
             if ($data['status'] >= 300) {
                 throw new ShipwireConnectionException($data['message'], $data['status']);
             }
-            return $data['resource'];
+            return $onlyResource?$data['resource']:$data;
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             $response = $e->getResponse()->json();
             var_dump($response); die();
