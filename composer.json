@@ -10,7 +10,16 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "5.0.3"
+        "guzzlehttp/guzzle": "5.0.3",
+        "justinrainbow/json-schema": "~1.3"
+},
+    "require-dev": {
+        "codeception/codeception":"*",
+        "codeception/phpbuiltinserver":"*",
+        "codeception/verify":"*",
+        "codeception/specify":"*",
+        "monolog/monolog":"*",
+        "phpseclib/phpseclib":"*"
     },
     "autoload": {
         "psr-4": {

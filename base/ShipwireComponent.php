@@ -10,6 +10,7 @@ use flydreamers\shipwire\ShipwireConnector;
  *
  * @package flydreamers\shipwire\base
  * @author Sebastian Thierer <sebas@flydreamers.com>
+ * @version
  *
  */
 class ShipwireComponent
@@ -28,10 +29,11 @@ class ShipwireComponent
     }
 
     /**
-     * @param $route
-     * @param $params
+     * @param string $route
+     * @param array $params
      * @param int $page
      * @param int $limit
+     * @return array
      * @throws \Exception
      * @throws \flydreamers\shipwire\exceptions\InvalidAuthorizationException
      * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
@@ -44,34 +46,36 @@ class ShipwireComponent
             $params['offset'] = $page * $limit;
             $params['limit'] = $limit;
         }
-        return $this->_connector->api($route, $params, ShipwireConnector::GET);
+        return $this->_connector->api($route, $params, ShipwireConnector::GET, null, true);
     }
 
     /**
-     * @param $route
-     * @param $params
-     * @param int $page
-     * @param int $limit
+     * @param string $route
+     * @param array $params
+     * @param string $body
+     * @param bool $onlyResource
+     * @return array
      * @throws \Exception
      * @throws \flydreamers\shipwire\exceptions\InvalidAuthorizationException
      * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
      * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
      */
-    protected function post($route, $params, $body, $onlyResource=false){
+    protected function post($route, $params, $body, $onlyResource=true){
         return $this->_connector->api($route, $params, ShipwireConnector::POST, $body, $onlyResource);
     }
 
     /**
-     * @param $route
-     * @param $params
-     * @param int $page
-     * @param int $limit
+     * @param string $route
+     * @param array $params
+     * @param string $body
+     * @param bool $onlyResource
+     * @return array
      * @throws \Exception
      * @throws \flydreamers\shipwire\exceptions\InvalidAuthorizationException
      * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
      * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
      */
-    protected function put($route, $params, $body){
-        return $this->_connector->api($route, $params, ShipwireConnector::PUT, $body);
+    protected function put($route, $params, $body, $onlyResource=false){
+        return $this->_connector->api($route, $params, ShipwireConnector::PUT, $body,$onlyResource);
     }
 }
