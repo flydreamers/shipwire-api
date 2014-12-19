@@ -75,7 +75,7 @@ class ShipwireComponent
      * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
      * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
      */
-    protected function put($route, $params, $body, $onlyResource=false){
+    protected function put($route, $params, $body, $onlyResource=true){
         return $this->_connector->api($route, $params, ShipwireConnector::PUT, $body,$onlyResource);
     }
 }

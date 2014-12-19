@@ -88,3 +88,9 @@ $items = [
 
 $shippingInfo = $rate->quote($address, $items, $config);
 ```
+
+### Orders
+
+```php
+
+```

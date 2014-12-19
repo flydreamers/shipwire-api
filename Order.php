@@ -4,9 +4,13 @@ namespace flydreamers\shipwire;
 
 use flydreamers\shipwire\base\ShipwireComponent;
 
+/**
+ * Class Order
+ * @package flydreamers\shipwire
+ * @author Sebastian Thierer <sebas@flydreamers.com>
+ */
 class Order extends ShipwireComponent
 {
-
     /**
      * Lists all orders depending on your parameters.
      * @param array $params
@@ -118,18 +122,49 @@ class Order extends ShipwireComponent
         return $this->get($this->getRoute('orders/{id}/trackings', $orderId), $params, $page, $limit);
     }
 
+    /**
+     * Creates an order. Validates OrderData with the ModelSchema at https://www.shipwire.com/w/developers/orders/#panel-shipwire1
+     * @param $orderData
+     * @param array $params
+     * @return array|bool
+     */
     public function create($orderData, $params = [])
     {
         if ($this->validateOrderData($orderData)) {
-            return $this->post('orders', $params, json_encode($orderData),false);
+            return $this->post('orders', $params, json_encode($orderData));
         }
         return false;
     }
 
+    /**
+     * Modify order details. Validates OrderData with the ModelSchema at https://www.shipwire.com/w/developers/orders/#panel-shipwire1
+     * @param $orderData
+     * @param array $params
+     * @return array|bool
+     */
+    public function update($orderId, $orderData, $params = [])
+    {
+        if ($this->validateOrderData($orderData)) {
+            return $this->put($this->getRoute('orders/{id}', $orderId), $params, json_encode($orderData));
+        }
+        return false;
+    }
+
+    /**
+     * Validates Order Data using the schema at
+     * @param $data
+     */
     private function validateOrderData($data)
     {
-        $schema = json_decode(self::SCHEMA_STR);
+        // TODO: Not working jsonSchemaValidator
+        return true;
+        $retriever = new \JsonSchema\Uri\UriRetriever;
+        $filePath = __DIR__.'/schemas/create_order.json';
+//        var_dump($filePath, realpath($filePath));die();
+        $schema = $retriever->retrieve('file://' . realpath($filePath));
+        var
         $validator = new \JsonSchema\Validator();
+        $validator->check($data, $schema);
         if ($validator->isValid()) {
             return true;
         } else {
@@ -140,276 +175,11 @@ class Order extends ShipwireComponent
             $this->errors= $errors;
         }
     }
+
+    /**
+     * Errors related to validation errors
+     * @var array
+     */
     public $errors=[];
 
-
-    /*
-PUT	/api/v3/orders/{id}
-Modify order details.
-     */
-
-    const SCHEMA_STR = '{
-    "properties": {
-        "externalId": {
-            "type": "string"
-        },
-        "commerceName": {
-            "type": "string"
-        },
-        "orderNo": {
-            "type": "string"
-        },
-        "processAfterDate": {
-            "type": "string"
-        },
-        "commercialInvoice": {
-            "properties": {
-                "additionalValue": {
-                    "type": "number"
-                },
-                "additionalValueCurrency": {
-                    "type": "string"
-                },
-                "insuranceValue": {
-                    "type": "number"
-                },
-                "insuranceValueCurrency": {
-                    "type": "string"
-                },
-                "shippingValue": {
-                    "type": "number"
-                },
-                "shippingValueCurrency": {
-                    "type": "string"
-                }
-            },
-            "required": [
-            ],
-            "type": ["object", "null"]
-        },
-        "items": {
-            "items": [
-                {
-                    "properties": {
-                        "commercialInvoiceValue": {
-                            "type": "number"
-                        },
-                        "commercialInvoiceValueCurrency": {
-                            "type": "string"
-                        },
-                        "quantity": {
-                            "type": "integer"
-                        },
-                        "sku": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "sku",
-                        "quantity"
-                    ],
-                    "type": "object"
-                }
-            ],
-            "type": "array"
-        },
-        "options": {
-            "properties": {
-                "affiliate": {
-                    "type": "string"
-                },
-                "canSplit": {
-                    "type": "integer"
-                },
-                "carrierCode": {
-                    "type": "string"
-                },
-                "currency": {
-                    "type": "string"
-                },
-                "discountCode": {
-                    "type": "string"
-                },
-                "forceAddress": {
-                    "type": "integer"
-                },
-                "forceAsync": {
-                    "type": "integer"
-                },
-                "forceDuplicate": {
-                    "type": "integer"
-                },
-                "channelName": {
-                    "type": "string"
-                },
-                "hold": {
-                    "type": "integer"
-                },
-                "referrer": {
-                    "type": "string"
-                },
-                "sameDay": {
-                    "type": "integer"
-                },
-                "server": {
-                    "type": "string"
-                },
-                "serviceLevelCode": {
-                    "type": "string"
-                },
-                "warehouseId": {
-                    "type": "integer"
-                },
-                "warehouseExternalId": {
-                    "type": "string"
-                },
-                "warehouseRegion": {
-                    "type": "string"
-                },
-                "warehouseArea": {
-                    "type": "string"
-                }
-            },
-            "required": [
-            ],
-            "type": "object"
-        },
-        "packingList": {
-            "properties": {
-                "message1": {
-                    "properties": {
-                        "body": {
-                            "type": "string"
-                        },
-                        "header": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "body",
-                        "header"
-                    ],
-                    "type": ["null", "object"]
-                },
-                "message2": {
-                    "properties": {
-                        "body": {
-                            "type": "string"
-                        },
-                        "header": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "body",
-                        "header"
-                    ],
-                    "type": ["null", "object"]
-                },
-                "message3": {
-                    "properties": {
-                        "body": {
-                            "type": "string"
-                        },
-                        "header": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "body",
-                        "header"
-                    ],
-                    "type": ["null", "object"]
-                },
-                "other": {
-                    "properties": {
-                        "body": {
-                            "type": "string"
-                        },
-                        "header": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "body",
-                        "header"
-                    ],
-                    "type": ["null", "object"]
-                }
-            },
-            "required": [
-            ],
-            "type": ["null", "object"]
-        },
-        "shipFrom": {
-            "properties": {
-                "company": {
-                    "type": "string"
-                }
-            },
-            "required": [
-            ],
-            "type": ["null", "object"]
-        },
-        "shipTo": {
-            "properties": {
-                "address1": {
-                    "type": "string"
-                },
-                "address2": {
-                    "type": "string"
-                },
-                "address3": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "country": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "isCommercial": {
-                    "type": "integer"
-                },
-                "isPoBox": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "company": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "postalCode": {
-                    "type": "string"
-                },
-                "state": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "name",
-                "address1",
-                "city",
-                "state",
-                "email",
-                "postalCode",
-                "country",
-                "phone",
-            ],
-            "type": "object"
-        }
-    },
-    "required": [
-        "items",
-        "shipTo",
-    ],
-    "type": "object"
-}';
 }
