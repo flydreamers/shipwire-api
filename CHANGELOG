@@ -1,0 +1,14 @@
+PHP Shipwire API connector
+--------------------------
+
+ v0.2.1
+-----------------
+FIX - Typo fixed
+
+ v0.2.0
+-----------------
+NEW - Added Order consumer.
+
+ v0.1.0
+-----------------
+NEW - Initial release. Added Rate and Stock consumers.

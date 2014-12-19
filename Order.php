@@ -158,22 +158,21 @@ class Order extends ShipwireComponent
     {
         // TODO: Not working jsonSchemaValidator
         return true;
-        $retriever = new \JsonSchema\Uri\UriRetriever;
-        $filePath = __DIR__.'/schemas/create_order.json';
-//        var_dump($filePath, realpath($filePath));die();
-        $schema = $retriever->retrieve('file://' . realpath($filePath));
-        var
-        $validator = new \JsonSchema\Validator();
-        $validator->check($data, $schema);
-        if ($validator->isValid()) {
-            return true;
-        } else {
-            $errors = [];
-            foreach ($validator->getErrors() as $error) {
-                $errors[] = "[".$error['property'] . "] " . $error['message'];
-            }
-            $this->errors= $errors;
-        }
+//        $retriever = new \JsonSchema\Uri\UriRetriever;
+//        $filePath = __DIR__.'/schemas/create_order.json';
+////        var_dump($filePath, realpath($filePath));die();
+//        $schema = $retriever->retrieve('file://' . realpath($filePath));
+//        $validator = new \JsonSchema\Validator();
+//        $validator->check($data, $schema);
+//        if ($validator->isValid()) {
+//            return true;
+//        } else {
+//            $errors = [];
+//            foreach ($validator->getErrors() as $error) {
+//                $errors[] = "[".$error['property'] . "] " . $error['message'];
+//            }
+//            $this->errors= $errors;
+//        }
     }
 
     /**
