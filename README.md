@@ -9,7 +9,7 @@ These library will help you with the usage of Shipwire API.
 
 ## Installing via Composer
 
-The recommended way to install Guzzle is through
+The recommended way to install Shipwire-API is through
 [Composer](http://getcomposer.org).
 
 ```bash
@@ -17,7 +17,7 @@ The recommended way to install Guzzle is through
 curl -sS https://getcomposer.org/installer | php
 ```
 
-Next, run the Composer command to install the latest stable version of Guzzle:
+Next, run the Composer command to install the latest stable version of Shipwire-API:
 
 ```bash
 composer require flydreamers/shipwire
@@ -92,5 +92,31 @@ $shippingInfo = $rate->quote($address, $items, $config);
 ### Orders
 
 ```php
+$order = new \flydreamers\shipwire\Order();
 
 ```
+
+**TBD**
+
+##Issues and Feature Requests
+
+If you have issues to report, or issues to request, use the issue tracker in Github.
+
+##Contributing
+
+Currently, the library isn't very feature rich or mature. If you'd like to offer improvements:
+
+1. Fork it
+2. Create your feature branch `git checkout -b feature-name`
+3. Commit your changes `git commit -am 'Add feature'` \*
+4. Push the branch `git push origin feature-name`
+5. Create a pull request
+
+##Contact
+
+Have a question? I'm on twitter: [@sebathi](https://twitter.com/sebathi)
+
+
+##License
+
+[MIT](License)
