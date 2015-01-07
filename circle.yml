@@ -8,4 +8,4 @@ dependencies:
     - echo "memory_limit = 64M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
 test:
   override:
-    - ./vendor/bin/codecept run
+    - ./vendor/bin/codecept run --steps --xml --html; cp tests/_output/report.xml $CIRCLE_TEST_REPORTS/codecept.xml
