@@ -6,3 +6,6 @@ machine:
 dependencies:
   pre:
     - echo "memory_limit = 64M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
+test:
+  override:
+    - ./vendor/bin/codecept run
