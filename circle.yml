@@ -5,5 +5,4 @@ machine:
     version: 5.5.15
 dependencies:
   pre:
-    - pecl install mongo
     - echo "memory_limit = 64M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
