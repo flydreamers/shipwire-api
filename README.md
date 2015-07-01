@@ -86,7 +86,7 @@ $items = [
     ['sku' => 'CAPTRACKERBLUE', 'quantity' => 3]
 ];
 
-$shippingInfo = $rate->quote($address, $items, $config);
+$shippingInfo = $rate->quote($address, $items, $options);
 ```
 
 ### Orders
