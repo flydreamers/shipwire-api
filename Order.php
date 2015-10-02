@@ -58,7 +58,7 @@ class Order extends ShipwireComponent
     private function getRoute($route, $orderId = null)
     {
         if ($orderId !== null) {
-            return strtr('orders/{id}', ['{id}' => $orderId]);
+            return strtr($route, ['{id}' => $orderId]);
         }
         return $route;
     }
