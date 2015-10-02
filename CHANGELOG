@@ -1,6 +1,10 @@
 PHP Shipwire API connector
 --------------------------
 
+ v0.2.2
+-----------------
+FIX - Bug #10 Order routes was hardcoded.
+
  v0.2.1
 -----------------
 FIX - Typo fixed
