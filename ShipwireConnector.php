@@ -2,6 +2,9 @@
 
 namespace flydreamers\shipwire;
 
+use flydreamers\shipwire\exceptions\ShipwireConnectionException;
+use flydreamers\shipwire\exceptions\InvalidAuthorizationException;
+use flydreamers\shipwire\exceptions\InvalidRequestException;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -143,13 +146,13 @@ class ShipwireConnector
             $response = $e->getResponse()->json();
             switch ($response['status']) {
                 case 401:
-                    throw new \flydreamers\shipwire\exceptions\InvalidAuthorizationException($response['message'], $response['status']);
+                    throw new InvalidAuthorizationException($response['message'], $response['status']);
                     break;
                 case 400:
-                    throw new \flydreamers\shipwire\exceptions\InvalidRequestException($response['message'], $response['status']);
+                    throw new InvalidRequestException($response['message'], $response['status']);
                     break;
             }
-            throw new \flydreamers\shipwire\exceptions\ShipwireConnectionException($response['message'], $response['status']);
+            throw new ShipwireConnectionException($response['message'], $response['status']);
         } catch (\Exception $exception) {
             throw $exception;
         }
