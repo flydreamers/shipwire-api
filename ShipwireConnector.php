@@ -6,6 +6,7 @@ use flydreamers\shipwire\exceptions\ShipwireConnectionException;
 use flydreamers\shipwire\exceptions\InvalidAuthorizationException;
 use flydreamers\shipwire\exceptions\InvalidRequestException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -142,7 +143,7 @@ class ShipwireConnector
                 throw new ShipwireConnectionException($data['message'], $data['status']);
             }
             return $onlyResource?$data['resource']:$data;
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
+        } catch (RequestException $e) {
             $response = $e->getResponse()->json();
             switch ($response['status']) {
                 case 401:
