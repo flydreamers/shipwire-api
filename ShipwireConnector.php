@@ -3,6 +3,8 @@
 namespace flydreamers\shipwire;
 
 use GuzzleHttp\Client;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class ShipwireConnector
 {
@@ -39,20 +41,30 @@ class ShipwireConnector
     static $version = 'v3';
 
     /**
+     * @var LoggerInterface
+     */
+    static $logger;
+
+    /**
      * Generates the connection instance for Shipwire
      *
-     * @param $username
-     * @param $password
-     * @param string $environment
-     * @param string $version
-     * @throws Exception
+     * @param                 $username
+     * @param                 $password
+     * @param null            $environment
+     * @param LoggerInterface $logger
      */
-    public static function init($username, $password, $environment = null)
+    public static function init($username, $password, $environment = null, LoggerInterface $logger = null)
     {
         self::$authorizationCode = base64_encode($username . ':' . $password);
         if (null !== $environment) {
             self::$environment = $environment;
         }
+
+        if (null === $logger) {
+            $logger = new NullLogger();
+        }
+        self::$logger = $logger;
+
         self::$instance = null;
     }
 
