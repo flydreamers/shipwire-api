@@ -2,15 +2,19 @@
 
 namespace flydreamers\shipwire;
 
+use flydreamers\shipwire\exceptions\ShipwireConnectionException;
+use flydreamers\shipwire\exceptions\InvalidAuthorizationException;
+use flydreamers\shipwire\exceptions\InvalidRequestException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\Response;
+use GuzzleHttp\Exception\RequestException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-class ShipwireConnector //extends Shipwire
+class ShipwireConnector
 {
     const GET = 'GET';
     const POST = 'POST';
     const PUT = 'PUT';
-
 
     /**
      * Environment method for integration. Possible values: 'live', 'sandbox'
@@ -40,25 +44,31 @@ class ShipwireConnector //extends Shipwire
      */
     static $version = 'v3';
 
-    private function __construct()
-    {
-    }
+    /**
+     * @var LoggerInterface
+     */
+    static $logger;
 
     /**
      * Generates the connection instance for Shipwire
      *
-     * @param $username
-     * @param $password
-     * @param string $environment
-     * @param string $version
-     * @throws Exception
+     * @param                 $username
+     * @param                 $password
+     * @param null            $environment
+     * @param LoggerInterface $logger
      */
-    public static function init($username, $password, $environment = null)
+    public static function init($username, $password, $environment = null, LoggerInterface $logger = null)
     {
         self::$authorizationCode = base64_encode($username . ':' . $password);
         if (null !== $environment) {
             self::$environment = $environment;
         }
+
+        if (null === $logger) {
+            $logger = new NullLogger();
+        }
+        self::$logger = $logger;
+
         self::$instance = null;
     }
 
@@ -79,11 +89,6 @@ class ShipwireConnector //extends Shipwire
         }
         return self::$instance;
     }
-
-    /**
-     * @var Client
-     */
-    private $_client;
 
     /**
      * Gets guzzle client to manage URL Connections
@@ -132,24 +137,34 @@ class ShipwireConnector //extends Shipwire
             $request->addHeader('content-type', 'application/json');
         }
         try {
+            self::$logger->debug($request);
+
             $response = $client->send($request);
+
+            self::$logger->debug($response);
+
             $data = $response->json();
             if ($data['status'] >= 300) {
                 throw new ShipwireConnectionException($data['message'], $data['status']);
             }
             return $onlyResource?$data['resource']:$data;
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $response = $e->getResponse()->json();
-            switch ($response['status']) {
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+
+            self::$logger->error($response);
+
+	        $data = $response->json();
+	        switch ($data['status']) {
                 case 401:
-                    throw new \flydreamers\shipwire\exceptions\InvalidAuthorizationException($response['message'], $response['status']);
+                    throw new InvalidAuthorizationException($response['message'], $response['status']);
                     break;
                 case 400:
-                    throw new \flydreamers\shipwire\exceptions\InvalidRequestException($response['message'], $response['status']);
+                    throw new InvalidRequestException($response['message'], $response['status']);
                     break;
             }
-            throw new \flydreamers\shipwire\exceptions\ShipwireConnectionException($response['message'], $response['status']);
+            throw new ShipwireConnectionException($response['message'], $response['status']);
         } catch (\Exception $exception) {
+            self::$logger->critical($exception);
             throw $exception;
         }
     }
