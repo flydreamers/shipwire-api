@@ -137,15 +137,23 @@ class ShipwireConnector
             $request->addHeader('content-type', 'application/json');
         }
         try {
+            self::$logger->debug($request);
+
             $response = $client->send($request);
+
+            self::$logger->debug($response);
+
             $data = $response->json();
             if ($data['status'] >= 300) {
                 throw new ShipwireConnectionException($data['message'], $data['status']);
             }
             return $onlyResource?$data['resource']:$data;
         } catch (RequestException $e) {
-            $response = $e->getResponse()->json();
-            switch ($response['status']) {
+            $response = $e->getResponse();
+
+            self::$logger->error($response);
+
+            switch ($response->json()['status']) {
                 case 401:
                     throw new InvalidAuthorizationException($response['message'], $response['status']);
                     break;
@@ -155,6 +163,7 @@ class ShipwireConnector
             }
             throw new ShipwireConnectionException($response['message'], $response['status']);
         } catch (\Exception $exception) {
+            self::$logger->critical($exception);
             throw $exception;
         }
     }
