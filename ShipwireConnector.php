@@ -3,14 +3,12 @@
 namespace flydreamers\shipwire;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\Response;
 
-class ShipwireConnector //extends Shipwire
+class ShipwireConnector
 {
     const GET = 'GET';
     const POST = 'POST';
     const PUT = 'PUT';
-
 
     /**
      * Environment method for integration. Possible values: 'live', 'sandbox'
@@ -39,10 +37,6 @@ class ShipwireConnector //extends Shipwire
      * @var string
      */
     static $version = 'v3';
-
-    private function __construct()
-    {
-    }
 
     /**
      * Generates the connection instance for Shipwire
@@ -79,11 +73,6 @@ class ShipwireConnector //extends Shipwire
         }
         return self::$instance;
     }
-
-    /**
-     * @var Client
-     */
-    private $_client;
 
     /**
      * Gets guzzle client to manage URL Connections
