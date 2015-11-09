@@ -153,7 +153,8 @@ class ShipwireConnector
 
             self::$logger->error($response);
 
-            switch ($response->json()['status']) {
+	        $data = $response->json();
+	        switch ($data['status']) {
                 case 401:
                     throw new InvalidAuthorizationException($response['message'], $response['status']);
                     break;
