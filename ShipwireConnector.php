@@ -2,6 +2,7 @@
 
 namespace flydreamers\shipwire;
 
+use flydreamers\shipwire\exceptions\ShipwireConnectionException;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 
