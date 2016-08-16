@@ -3,6 +3,7 @@
 namespace flydreamers\shipwire;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 
 class ShipwireConnector //extends Shipwire
 {
@@ -39,6 +40,11 @@ class ShipwireConnector //extends Shipwire
      */
     static $version = 'v3';
 
+    /**
+     * @var HandlerStack
+     */
+    static $handlerStack;
+
     private function __construct()
     {
     }
@@ -49,15 +55,19 @@ class ShipwireConnector //extends Shipwire
      * @param $username
      * @param $password
      * @param string $environment
-     * @param string $version
+     * @param HandlerStack $handlerStack
      * @throws Exception
      */
-    public static function init($username, $password, $environment = null)
+    public static function init($username, $password, $environment = null, HandlerStack $handlerStack = null)
     {
         self::$authorizationCode = base64_encode($username . ':' . $password);
         if (null !== $environment) {
             self::$environment = $environment;
         }
+        if (null !== $handlerStack) {
+            self::$handlerStack = $handlerStack;
+        }
+
         self::$instance = null;
     }
 
@@ -95,11 +105,13 @@ class ShipwireConnector //extends Shipwire
             if (!isset(self::$authorizationCode)) {
                 throw new \Exception('Invalid authorization code');
             }
-            $this->client = new Client(
-                [
-                    'base_uri' => self::getEndpointUrl(),
-                ]
-            );
+            $config = ['base_uri' => self::getEndpointUrl()];
+
+            if (isset(self::$handlerStack)) {
+                $config['handler'] = self::$handlerStack;
+            }
+
+            $this->client = new Client($config);
         }
         return $this->client;
     }
