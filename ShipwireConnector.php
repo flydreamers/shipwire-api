@@ -9,12 +9,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 
-class ShipwireConnector //extends Shipwire
+class ShipwireConnector
 {
     const GET = 'GET';
     const POST = 'POST';
     const PUT = 'PUT';
-
 
     /**
      * Environment method for integration. Possible values: 'live', 'sandbox'
@@ -91,11 +90,6 @@ class ShipwireConnector //extends Shipwire
         }
         return self::$instance;
     }
-
-    /**
-     * @var Client
-     */
-    private $_client;
 
     /**
      * Gets guzzle client to manage URL Connections
