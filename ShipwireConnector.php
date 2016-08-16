@@ -3,7 +3,6 @@
 namespace flydreamers\shipwire;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\Response;
 
 class ShipwireConnector //extends Shipwire
 {
@@ -98,7 +97,7 @@ class ShipwireConnector //extends Shipwire
             }
             $this->client = new Client(
                 [
-                    'base_url' => self::getEndpointUrl(),
+                    'base_uri' => self::getEndpointUrl(),
                 ]
             );
         }
@@ -117,29 +116,33 @@ class ShipwireConnector //extends Shipwire
     public function api($resource, $params = [], $method = "GET", $body = null, $onlyResource = false)
     {
         $client = self::getClient();
-        $request = $client->createRequest($method, '/api/v3/' . $resource, [
-            'headers' => [
-                'User-Agent' => 'flydreamers-shipwireapi/1.0',
-                'Accept' => 'application/json',
-                'Authorization' => 'Basic ' . self::$authorizationCode
-            ],
-            'body'=>$body
-        ]);
-        if (count($params) > 0) {
-            $request->setQuery($params);
-        }
-        if ($body!==null){
-            $request->addHeader('content-type', 'application/json');
-        }
+
         try {
-            $response = $client->send($request);
-            $data = $response->json();
+            $headers = [
+                'User-Agent'    => 'flydreamers-shipwireapi/1.0',
+                'Accept'        => 'application/json',
+                'Authorization' => 'Basic ' . self::$authorizationCode
+            ];
+
+            if ($body !== null) {
+                $headers['content-type'] = 'application/json';
+            }
+
+            $response = $client->request($method, '/api/v3/'.$resource, [
+                'headers' => $headers,
+                'query' => $params,
+                'body' => $body,
+            ]);
+
+            $data = json_decode($response->getBody(), true);
+
             if ($data['status'] >= 300) {
                 throw new ShipwireConnectionException($data['message'], $data['status']);
             }
             return $onlyResource?$data['resource']:$data;
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $response = $e->getResponse()->json();
+            $response = json_decode($e->getResponse()->getBody(), true);
+
             switch ($response['status']) {
                 case 401:
                     throw new \flydreamers\shipwire\exceptions\InvalidAuthorizationException($response['message'], $response['status']);
