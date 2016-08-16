@@ -60,7 +60,6 @@ class ShipwireConnector //extends Shipwire
      * @param $password
      * @param string $environment
      * @param HandlerStack $handlerStack
-     * @throws Exception
      */
     public static function init($username, $password, $environment = null, HandlerStack $handlerStack = null)
     {
@@ -102,6 +101,7 @@ class ShipwireConnector //extends Shipwire
      * Gets guzzle client to manage URL Connections
      *
      * @return Client
+     * @throws \Exception
      */
     private function getClient()
     {
@@ -122,12 +122,17 @@ class ShipwireConnector //extends Shipwire
 
     /**
      * Send an api request to Shipwire Endpoint
+     *
      * @param string $resource function to be called
-     * @param array $params key value parameters
+     * @param array  $params   key value parameters
      * @param string $method
      * @param string $body
-     *
-     * @throws Exception
+     * @param bool   $onlyResource
+     * @return mixed
+     * @throws InvalidAuthorizationException
+     * @throws InvalidRequestException
+     * @throws ShipwireConnectionException
+     * @throws \Exception
      */
     public function api($resource, $params = [], $method = "GET", $body = null, $onlyResource = false)
     {
