@@ -118,10 +118,10 @@ class ShipwireConnector
      * Send an api request to Shipwire Endpoint
      *
      * @param string $resource function to be called
-     * @param array  $params   key value parameters
+     * @param array $params key value parameters
      * @param string $method
      * @param string $body
-     * @param bool   $onlyResource
+     * @param bool $onlyResource
      * @return mixed
      * @throws InvalidAuthorizationException
      * @throws InvalidRequestException
