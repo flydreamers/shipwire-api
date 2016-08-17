@@ -1,6 +1,10 @@
 PHP Shipwire API connector
 --------------------------
 
+ v0.2.4
+-----------------
+FIX - #18 Fix expanded order details.
+
  v0.2.3
 -----------------
 ENH - Updated guzzle to v6 to use middlewares (logging or other functionality)
