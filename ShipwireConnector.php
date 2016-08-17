@@ -2,15 +2,18 @@
 
 namespace flydreamers\shipwire;
 
+use flydreamers\shipwire\exceptions\InvalidAuthorizationException;
+use flydreamers\shipwire\exceptions\InvalidRequestException;
+use flydreamers\shipwire\exceptions\ShipwireConnectionException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 
-class ShipwireConnector //extends Shipwire
+class ShipwireConnector
 {
     const GET = 'GET';
     const POST = 'POST';
     const PUT = 'PUT';
-
 
     /**
      * Environment method for integration. Possible values: 'live', 'sandbox'
@@ -56,7 +59,6 @@ class ShipwireConnector //extends Shipwire
      * @param $password
      * @param string $environment
      * @param HandlerStack $handlerStack
-     * @throws Exception
      */
     public static function init($username, $password, $environment = null, HandlerStack $handlerStack = null)
     {
@@ -90,14 +92,10 @@ class ShipwireConnector //extends Shipwire
     }
 
     /**
-     * @var Client
-     */
-    private $_client;
-
-    /**
      * Gets guzzle client to manage URL Connections
      *
      * @return Client
+     * @throws \Exception
      */
     private function getClient()
     {
@@ -118,12 +116,17 @@ class ShipwireConnector //extends Shipwire
 
     /**
      * Send an api request to Shipwire Endpoint
+     *
      * @param string $resource function to be called
      * @param array $params key value parameters
      * @param string $method
      * @param string $body
-     *
-     * @throws Exception
+     * @param bool $onlyResource
+     * @return mixed
+     * @throws InvalidAuthorizationException
+     * @throws InvalidRequestException
+     * @throws ShipwireConnectionException
+     * @throws \Exception
      */
     public function api($resource, $params = [], $method = "GET", $body = null, $onlyResource = false)
     {
@@ -152,18 +155,18 @@ class ShipwireConnector //extends Shipwire
                 throw new ShipwireConnectionException($data['message'], $data['status']);
             }
             return $onlyResource?$data['resource']:$data;
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
+        } catch (RequestException $e) {
             $response = json_decode($e->getResponse()->getBody(), true);
 
             switch ($response['status']) {
                 case 401:
-                    throw new \flydreamers\shipwire\exceptions\InvalidAuthorizationException($response['message'], $response['status']);
+                    throw new InvalidAuthorizationException($response['message'], $response['status']);
                     break;
                 case 400:
-                    throw new \flydreamers\shipwire\exceptions\InvalidRequestException($response['message'], $response['status']);
+                    throw new InvalidRequestException($response['message'], $response['status']);
                     break;
             }
-            throw new \flydreamers\shipwire\exceptions\ShipwireConnectionException($response['message'], $response['status']);
+            throw new ShipwireConnectionException($response['message'], $response['status']);
         } catch (\Exception $exception) {
             throw $exception;
         }

@@ -123,56 +123,25 @@ class Order extends ShipwireComponent
     }
 
     /**
-     * Creates an order. Validates OrderData with the ModelSchema at https://www.shipwire.com/w/developers/orders/#panel-shipwire1
+     * Creates an order.
      * @param $orderData
      * @param array $params
      * @return array|bool
      */
     public function create($orderData, $params = [])
     {
-        if ($this->validateOrderData($orderData)) {
-            return $this->post('orders', $params, json_encode($orderData));
-        }
-        return false;
+        return $this->post('orders', $params, json_encode($orderData));
     }
 
     /**
-     * Modify order details. Validates OrderData with the ModelSchema at https://www.shipwire.com/w/developers/orders/#panel-shipwire1
+     * Modify order details.
      * @param $orderData
      * @param array $params
      * @return array|bool
      */
     public function update($orderId, $orderData, $params = [])
     {
-        if ($this->validateOrderData($orderData)) {
-            return $this->put($this->getRoute('orders/{id}', $orderId), $params, json_encode($orderData));
-        }
-        return false;
-    }
-
-    /**
-     * Validates Order Data using the schema at
-     * @param $data
-     */
-    private function validateOrderData($data)
-    {
-        // TODO: Not working jsonSchemaValidator
-        return true;
-//        $retriever = new \JsonSchema\Uri\UriRetriever;
-//        $filePath = __DIR__.'/schemas/create_order.json';
-////        var_dump($filePath, realpath($filePath));die();
-//        $schema = $retriever->retrieve('file://' . realpath($filePath));
-//        $validator = new \JsonSchema\Validator();
-//        $validator->check($data, $schema);
-//        if ($validator->isValid()) {
-//            return true;
-//        } else {
-//            $errors = [];
-//            foreach ($validator->getErrors() as $error) {
-//                $errors[] = "[".$error['property'] . "] " . $error['message'];
-//            }
-//            $this->errors= $errors;
-//        }
+        return $this->put($this->getRoute('orders/{id}', $orderId), $params, json_encode($orderData));
     }
 
     /**
@@ -180,5 +149,4 @@ class Order extends ShipwireComponent
      * @var array
      */
     public $errors=[];
-
 }

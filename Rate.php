@@ -12,6 +12,8 @@ class Rate extends ShipwireComponent
      * @param Address $address
      * @param array $items [['sku' => 'CAPTRACKERBLUE', 'quantity' => 3]]
      * @param array $options for example: ["currency" => "USD", "groupBy" => "all", "canSplit" => 1, "warehouseArea" => "US"]
+     *
+     * @return array
      */
     public function quote(Address $address, $items = [], $options = [])
     {
