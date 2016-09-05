@@ -156,17 +156,17 @@ class ShipwireConnector
             }
             return $onlyResource?$data['resource']:$data;
         } catch (RequestException $e) {
-            $response = json_decode($e->getResponse()->getBody(), true);
+            $data = json_decode($e->getResponse()->getBody(), true);
 
-            switch ($response['status']) {
+            switch ($data['status']) {
                 case 401:
-                    throw new InvalidAuthorizationException($response['message'], $response['status']);
+                    throw new InvalidAuthorizationException($data['message'], $data['status']);
                     break;
                 case 400:
-                    throw new InvalidRequestException($response['message'], $response['status']);
+                    throw new InvalidRequestException($data['message'], $data['status']);
                     break;
             }
-            throw new ShipwireConnectionException($response['message'], $response['status']);
+            throw new ShipwireConnectionException($data['message'], $data['status']);
         } catch (\Exception $exception) {
             throw $exception;
         }
