@@ -1,6 +1,10 @@
 PHP Shipwire API connector
 --------------------------
 
+ v0.2.5
+-----------------
+FIX - #21 Sometimes on error response does not have a body.
+
  v0.2.4
 -----------------
 FIX - #18 Fix expanded order details.
