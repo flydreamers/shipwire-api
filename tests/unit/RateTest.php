@@ -35,9 +35,6 @@ class RateTest extends \Codeception\TestCase\Test
             "isPoBox" => 0
         ]);
 
-
-        $items = [['sku' => 'CAPTRACKERBLUE', 'quantity' => 3]];
-
         $shippingInfo = $rate->quote($address, [['sku' => 'CAPTRACKERBLUE', 'quantity' => 3]]);
 
         foreach ($shippingInfo['rates'][0]['serviceOptions'] as $shippingRate) {
