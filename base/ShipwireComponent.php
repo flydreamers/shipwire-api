@@ -40,12 +40,11 @@ class ShipwireComponent
      * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
      */
     protected function get($route, $params, $page=0, $limit=50){
-        if ($page!=false){
-            $limit = max(1,min($limit,100));
-            $page = max(0,$page);
-            $params['offset'] = $page * $limit;
-            $params['limit'] = $limit;
-        }
+        $limit = max(1,min($limit,100));
+        $page = max(0,$page);
+        $params['offset'] = $page * $limit;
+        $params['limit'] = $limit;
+
         return $this->_connector->api($route, $params, ShipwireConnector::GET, null, true);
     }
 
