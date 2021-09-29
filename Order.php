@@ -1,13 +1,13 @@
 <?php
 
-namespace flydreamers\shipwire;
+namespace mataluis2k\shipwire;
 
-use flydreamers\shipwire\base\ShipwireComponent;
+use mataluis2k\shipwire\base\ShipwireComponent;
 
 /**
  * Class Order
- * @package flydreamers\shipwire
- * @author Sebastian Thierer <sebas@flydreamers.com>
+ * @package mataluis2k\shipwire
+ * @author Sebastian Thierer <sebas@mataluis2k.com>
  */
 class Order extends ShipwireComponent
 {

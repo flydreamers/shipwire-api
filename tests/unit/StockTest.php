@@ -1,7 +1,7 @@
 <?php
 
 
-use flydreamers\shipwire\Stock;
+use mataluis2k\shipwire\Stock;
 
 class StockTest extends \Codeception\TestCase\Test
 {

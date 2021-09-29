@@ -1,10 +1,10 @@
 <?php
 
-namespace flydreamers\shipwire;
+namespace mataluis2k\shipwire;
 
-use flydreamers\shipwire\exceptions\InvalidAuthorizationException;
-use flydreamers\shipwire\exceptions\InvalidRequestException;
-use flydreamers\shipwire\exceptions\ShipwireConnectionException;
+use mataluis2k\shipwire\exceptions\InvalidAuthorizationException;
+use mataluis2k\shipwire\exceptions\InvalidRequestException;
+use mataluis2k\shipwire\exceptions\ShipwireConnectionException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
@@ -134,7 +134,7 @@ class ShipwireConnector
 
         try {
             $headers = [
-                'User-Agent'    => 'flydreamers-shipwireapi/1.0',
+                'User-Agent'    => 'mataluis2k-shipwireapi/1.0',
                 'Accept'        => 'application/json',
                 'Authorization' => 'Basic ' . self::$authorizationCode
             ];

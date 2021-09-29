@@ -1,15 +1,15 @@
 <?php
 
-namespace flydreamers\shipwire\base;
+namespace mataluis2k\shipwire\base;
 
-use flydreamers\shipwire\ShipwireConnector;
+use mataluis2k\shipwire\ShipwireConnector;
 
 
 /**
  * Class ShipwireComponent
  *
- * @package flydreamers\shipwire\base
- * @author Sebastian Thierer <sebas@flydreamers.com>
+ * @package mataluis2k\shipwire\base
+ * @author Sebastian Thierer <sebas@mataluis2k.com>
  * @version
  *
  */
@@ -35,9 +35,9 @@ class ShipwireComponent
      * @param int $limit
      * @return array
      * @throws \Exception
-     * @throws \flydreamers\shipwire\exceptions\InvalidAuthorizationException
-     * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
-     * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidAuthorizationException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidRequestException
+     * @throws \mataluis2k\shipwire\exceptions\ShipwireConnectionException
      */
     protected function get($route, $params, $page=0, $limit=50){
         if ($page!=false){
@@ -56,9 +56,9 @@ class ShipwireComponent
      * @param bool $onlyResource
      * @return array
      * @throws \Exception
-     * @throws \flydreamers\shipwire\exceptions\InvalidAuthorizationException
-     * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
-     * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidAuthorizationException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidRequestException
+     * @throws \mataluis2k\shipwire\exceptions\ShipwireConnectionException
      */
     protected function post($route, $params, $body, $onlyResource=true){
         return $this->_connector->api($route, $params, ShipwireConnector::POST, $body, $onlyResource);
@@ -71,9 +71,9 @@ class ShipwireComponent
      * @param bool $onlyResource
      * @return array
      * @throws \Exception
-     * @throws \flydreamers\shipwire\exceptions\InvalidAuthorizationException
-     * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
-     * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidAuthorizationException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidRequestException
+     * @throws \mataluis2k\shipwire\exceptions\ShipwireConnectionException
      */
     protected function put($route, $params, $body, $onlyResource=true){
         return $this->_connector->api($route, $params, ShipwireConnector::PUT, $body,$onlyResource);

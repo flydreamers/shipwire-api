@@ -1,8 +1,8 @@
 <?php
 
-namespace flydreamers\shipwire;
+namespace mataluis2k\shipwire;
 
-use flydreamers\shipwire\base\ShipwireComponent;
+use mataluis2k\shipwire\base\ShipwireComponent;
 
 class Rate extends ShipwireComponent
 {

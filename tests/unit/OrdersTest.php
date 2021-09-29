@@ -75,11 +75,11 @@ class OrdersTest extends \Codeception\TestCase\Test
 
     /**
      * Get an order
-     * @return \flydreamers\shipwire\Order
+     * @return \mataluis2k\shipwire\Order
      */
     private function getOrder()
     {
-        $order = new \flydreamers\shipwire\Order();
+        $order = new \mataluis2k\shipwire\Order();
         return $order;
     }
 

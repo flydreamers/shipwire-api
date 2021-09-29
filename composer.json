@@ -6,7 +6,7 @@
     "authors": [
         {
             "name": "Sebastian Thierer",
-            "email": "sebas@flydreamers.com"
+            "email": "sebas@mataluis2k.com"
         }
     ],
     "require": {
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "flydreamers\\shipwire\\": ""
+            "mataluis2k\\shipwire\\": ""
         }
     }
 }

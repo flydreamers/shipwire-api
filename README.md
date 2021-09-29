@@ -2,10 +2,10 @@ shipwire-api
 ============
 These library will help you with the usage of Shipwire API.
 
-[![Latest Stable Version](https://poser.pugx.org/flydreamers/shipwire-api/v/stable.svg)](https://packagist.org/packages/flydreamers/shipwire-api)
-[![Total Downloads](https://poser.pugx.org/flydreamers/shipwire-api/downloads.svg)](https://packagist.org/packages/flydreamers/shipwire-api)
-[![Latest Unstable Version](https://poser.pugx.org/flydreamers/shipwire-api/v/unstable.svg)](https://packagist.org/packages/flydreamers/shipwire-api)
-[![License](https://poser.pugx.org/flydreamers/shipwire-api/license.svg)](https://packagist.org/packages/flydreamers/shipwire-api)
+[![Latest Stable Version](https://poser.pugx.org/mataluis2k/shipwire-api/v/stable.svg)](https://packagist.org/packages/mataluis2k/shipwire-api)
+[![Total Downloads](https://poser.pugx.org/mataluis2k/shipwire-api/downloads.svg)](https://packagist.org/packages/mataluis2k/shipwire-api)
+[![Latest Unstable Version](https://poser.pugx.org/mataluis2k/shipwire-api/v/unstable.svg)](https://packagist.org/packages/mataluis2k/shipwire-api)
+[![License](https://poser.pugx.org/mataluis2k/shipwire-api/license.svg)](https://packagist.org/packages/mataluis2k/shipwire-api)
 
 ## Installing via Composer
 
@@ -54,7 +54,7 @@ If you have more than one SKU, just add them to the array like:
 ```php
 $response = $stock->getStockBySKUs(['CAPTRACKERBLUE', 'CAPTRACKERRED', 'ETCETERA']);
 ```
-Extra parameters can be used. See \flydreamers\shipwire\Stock for more information.
+Extra parameters can be used. See \mataluis2k\shipwire\Stock for more information.
 
 ### Rates
 
@@ -92,7 +92,7 @@ $shippingInfo = $rate->quote($address, $items, $options);
 ### Orders
 
 ```php
-$order = new \flydreamers\shipwire\Order();
+$order = new \mataluis2k\shipwire\Order();
 
 ```
 

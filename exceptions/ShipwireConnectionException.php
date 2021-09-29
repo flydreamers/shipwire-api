@@ -1,10 +1,10 @@
 <?php
-namespace flydreamers\shipwire\exceptions;
+namespace mataluis2k\shipwire\exceptions;
 
 /**
  * Shipwire Base Exception
  * Class ShipwireConnectionException
- * @package flydreamers\shipwire\exceptions
+ * @package mataluis2k\shipwire\exceptions
  */
 class ShipwireConnectionException extends \Exception
 {

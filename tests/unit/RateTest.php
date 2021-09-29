@@ -1,8 +1,8 @@
 <?php
 
 
-use flydreamers\shipwire\Address;
-use flydreamers\shipwire\Rate;
+use mataluis2k\shipwire\Address;
+use mataluis2k\shipwire\Rate;
 
 class RateTest extends \Codeception\TestCase\Test
 {

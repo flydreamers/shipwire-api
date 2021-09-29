@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(dirname(__DIR__)) . '/vendor/autoload.php');
 
-use flydreamers\shipwire\ShipwireConnector;
+use mataluis2k\shipwire\ShipwireConnector;
 
 $config = [
     'username' => 'test@email.com',

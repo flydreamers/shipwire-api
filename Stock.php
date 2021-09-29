@@ -1,8 +1,8 @@
 <?php
 
-namespace flydreamers\shipwire;
+namespace mataluis2k\shipwire;
 
-use flydreamers\shipwire\base\ShipwireComponent;
+use mataluis2k\shipwire\base\ShipwireComponent;
 
 class Stock extends ShipwireComponent
 {
@@ -13,9 +13,9 @@ class Stock extends ShipwireComponent
      * @param int $page
      * @param int $limit
      * @throws \Exception
-     * @throws \flydreamers\shipwire\exceptions\InvalidAuthorizationException
-     * @throws \flydreamers\shipwire\exceptions\InvalidRequestException
-     * @throws \flydreamers\shipwire\exceptions\ShipwireConnectionException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidAuthorizationException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidRequestException
+     * @throws \mataluis2k\shipwire\exceptions\ShipwireConnectionException
      */
     public function getStock($params = [], $includeEmpty=false, $page = 0, $limit = 50)
     {

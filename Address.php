@@ -1,6 +1,6 @@
 <?php
 
-namespace flydreamers\shipwire;
+namespace mataluis2k\shipwire;
 
 class Address
 {
