@@ -78,4 +78,19 @@ class ShipwireComponent
     protected function put($route, $params, $body, $onlyResource=true){
         return $this->_connector->api($route, $params, ShipwireConnector::PUT, $body,$onlyResource);
     }
+
+    /**
+     * @param string $route
+     * @param array $params
+     * @param string $body
+     * @param bool $onlyResource
+     * @return array
+     * @throws \Exception
+     * @throws \mataluis2k\shipwire\exceptions\InvalidAuthorizationException
+     * @throws \mataluis2k\shipwire\exceptions\InvalidRequestException
+     * @throws \mataluis2k\shipwire\exceptions\ShipwireConnectionException
+     */
+    protected function delete($route, $params, $onlyResource=true){
+        return $this->_connector->api($route, $params, ShipwireConnector::DELETE, $onlyResource);
+    }
 }

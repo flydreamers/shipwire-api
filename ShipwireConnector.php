@@ -14,6 +14,7 @@ class ShipwireConnector
     const GET = 'GET';
     const POST = 'POST';
     const PUT = 'PUT';
+    const DELETE = 'DELETE';
 
     /**
      * Environment method for integration. Possible values: 'live', 'sandbox'
@@ -150,6 +151,7 @@ class ShipwireConnector
             ]);
 
             $data = json_decode($response->getBody(), true);
+
 
             if ($data['status'] >= 300) {
                 throw new ShipwireConnectionException($data['message'], $data['status']);
