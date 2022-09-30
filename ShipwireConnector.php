@@ -144,7 +144,8 @@ class ShipwireConnector
                 $headers['content-type'] = 'application/json';
             }
 
-            $response = $client->request($method, "/api/{$this->version}/".$resource, [
+            $version = self::$version;
+            $response = $client->request($method, "/api/{$version}/".$resource, [
                 'headers' => $headers,
                 'query' => $params,
                 'body' => $body,
