@@ -42,7 +42,7 @@ class ShipwireConnector
     /**
      * @var string
      */
-    static $version = 'v3';
+    static $version = 'v3.1';
 
     /**
      * @var HandlerStack
@@ -129,7 +129,7 @@ class ShipwireConnector
      * @throws ShipwireConnectionException
      * @throws \Exception
      */
-    public function api($resource, $params = [], $method = "GET", $body = null, $onlyResource = false)
+    public function api($resource, $params = [], $method = "GET", $body = null, $onlyResource = false, $returnDespiteError = false)
     {
         $client = self::getClient();
 
@@ -144,14 +144,13 @@ class ShipwireConnector
                 $headers['content-type'] = 'application/json';
             }
 
-            $response = $client->request($method, '/api/v3/'.$resource, [
+            $response = $client->request($method, "/api/{$this->version}/".$resource, [
                 'headers' => $headers,
                 'query' => $params,
                 'body' => $body,
             ]);
 
             $data = json_decode($response->getBody(), true);
-
 
             if ($data['status'] >= 300) {
                 throw new ShipwireConnectionException($data['message'], $data['status']);
@@ -161,6 +160,10 @@ class ShipwireConnector
             if ($responseBody = $e->getResponse()->getBody()) {
                 $data = json_decode($responseBody, true);
 
+                if($returnDespiteError) {
+                    return $onlyResource?$data['resource']:$data;
+                }
+                
                 switch ($data['status']) {
                     case 401:
                         throw new InvalidAuthorizationException($data['message'], $data['status']);
