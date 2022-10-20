@@ -42,7 +42,7 @@ class ShipwireConnector
     /**
      * @var string
      */
-    static $version = 'v3.1';
+    static $version = 'v3';
 
     /**
      * @var HandlerStack
@@ -129,7 +129,7 @@ class ShipwireConnector
      * @throws ShipwireConnectionException
      * @throws \Exception
      */
-    public function api($resource, $params = [], $method = "GET", $body = null, $onlyResource = false, $returnDespiteError = false)
+    public function api($resource, $params = [], $method = "GET", $body = null, $onlyResource = false, $returnDespiteError = false, $version = null)
     {
         $client = self::getClient();
 
@@ -144,7 +144,7 @@ class ShipwireConnector
                 $headers['content-type'] = 'application/json';
             }
 
-            $version = self::$version;
+            $version = $version ?? self::$version;
             $response = $client->request($method, "/api/{$version}/".$resource, [
                 'headers' => $headers,
                 'query' => $params,
